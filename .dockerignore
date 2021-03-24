@@ -1,6 +1,7 @@
 # git
 .git
 .gitignore
+.github
 
 # vim
 *.swp
