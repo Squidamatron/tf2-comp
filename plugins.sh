@@ -58,6 +58,11 @@ echo -e "\nsm plugins load properpregame" >> "${STEAMAPPDIR}/${STEAMAPP}/cfg/sou
 # server.cfg
 mv "${HOMEDIR}/server.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/server.cfg"
 
+# newbie mixes
+echo -e "exec \"rgl_6s_5cp_scrim\"\nservercfgfile \"newbie\"\ntf_spec_xray \"1\"" > "newbie.cfg"
+chmod 0644 "newbie.cfg"
+mv "newbie.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/newbie.cfg"
+
 # Just making sure :D
 #chown -R "${USER}:${USER}" "${STEAMAPPDIR}/${STEAMAPP}"
 cd "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/"
