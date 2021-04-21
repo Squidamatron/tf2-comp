@@ -17,6 +17,11 @@ wget -q "$LATESTRGL"
 unzip "$RGLDL" -d "${STEAMAPPDIR}/${STEAMAPP}"
 rm "$RGLDL"
 
+# ETF2L CFG
+wget -q "https://etf2l.org/configs/etf2l_configs.zip"
+unzip "etf2l_configs.zip" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
+rm "etf2l_configs.zip"
+
 # SOAP-DM
 wget -q "https://github.com/sapphonie/SOAP-TF2DM/archive/master.zip" -O "soap-dm.zip"
 unzip "soap-dm.zip"
@@ -40,7 +45,7 @@ rm "steamtools-0.10.0-git179-54fdc51-linux.zip"
 wget -q "https://github.com/demostf/plugin/raw/master/demostf.smx" -O "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/demostf.smx"
 
 # F2 Plugins
-wget "http://sourcemod.krus.dk/f2-sourcemod-plugins.zip"
+wget -q "http://sourcemod.krus.dk/f2-sourcemod-plugins.zip"
 unzip "f2-sourcemod-plugins.zip" -d f2
 chmod 0664 f2/*
 cp f2/{afk,logstf,medicstats,recordstv,restorescore,supstats2}.smx "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/."

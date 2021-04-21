@@ -1,6 +1,6 @@
 ## Team Fortress 2 Competitive Image
 
-A Docker image for competitive TF2 using RGL configs
+A Docker image for competitive TF2 using RGL and ETF2L configs
 
 ```
 docker pull squidamatron/tf2-comp
@@ -41,6 +41,16 @@ RCON_PW="changeme"
 START_MAP="cp_process_final"
 MAX_PLAYERS="16"
 CONFIG=""
+METAMOD_VERSION="1.10"
+SOURCEMOD_VERSION="1.10"
+UPDATE_XM="0"
+UPDATE_CFGS="0"
+UPDATE_PLUGINS="0"
 LOGSTF_APIKEY=""
 DEMOSTF_APIKEY=""
 ```
+`UPDATE_XM` Updates MetaMod and SourceMod to a newer version (**NOTE:** Do NOT use 1.11 for now as it conflicts with RGL plugins apparently).
+`UPDATE_CFGS` Downloads the current versions of ETF2L CFGs and RGL Plugins.
+`UPDATE_PLUGINS` Downloads the current versions of SOAP-DM, demostf, F2, Map Downloader, ProperPregame plugins.
+
+All `UPDATE_` envs will accept `1` as a value to run updates and will attempt to run an update on every container start.
