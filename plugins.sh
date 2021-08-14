@@ -63,10 +63,20 @@ echo -e "\nsm plugins load properpregame" >> "${STEAMAPPDIR}/${STEAMAPP}/cfg/sou
 # server.cfg
 mv "${HOMEDIR}/server.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/server.cfg"
 
-# newbie mixes
-echo -e "exec \"rgl_6s_5cp_scrim\"\nservercfgfile \"newbie\"\ntf_spec_xray \"1\"" > "newbie.cfg"
+# NA newbie mixes
+echo -e "exec \"rgl_6s_5cp_scrim\"\nservercfgfile \"na_newbie\"\ntf_spec_xray \"1\"" > "na_newbie.cfg"
+chmod 0644 "na_newbie.cfg"
+mv "na_newbie.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/na_newbie.cfg"
+
+# At Rogue's Request :^)
+echo -e "exec \"na_newbie\"" > "newbie.cfg"
 chmod 0644 "newbie.cfg"
 mv "newbie.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/newbie.cfg"
+
+# EU newbie mixes
+echo -e "exec \"rgl_off\"\nservercfgfile \"eu_newbie\"\nexec \"etf2l_6v6_5cp\"" > "eu_newbie.cfg"
+chmod 0644 "eu_newbie.cfg"
+mv "eu_newbie.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/eu_newbie.cfg"
 
 # Just making sure :D
 #chown -R "${USER}:${USER}" "${STEAMAPPDIR}/${STEAMAPP}"
