@@ -67,6 +67,21 @@ if [ "$UPDATE_PLUGINS" -gt 0 ]; then
 	echo -e "\nsm plugins load properpregame" >> "${STEAMAPPDIR}/${STEAMAPP}/cfg/sourcemod/soap_notlive.cfg"
 fi
 
+# Sets Region
+if [ ! -z "$REGION" ];then
+	if [ "$REGION" == "NA" ];then
+		echo "Setting REGION to NA..."
+		# It's the Default, nothing changes! Unless some other plugins come in to play..."
+	elif [ "$REGION" == "EU" ];then
+		echo "Setting REGION to EU..."
+		# Delete RGL plugins
+		rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglqol.smx"
+		rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglupdater.smx"
+	else
+		echo "Unknown Region :O"
+	fi
+fi
+
 # Add cfg to exec in server.cfg before server starts
 if [ ! -z "$CONFIG" ]; then
 	sed -i '$a\\nexec "'"${CONFIG}"'"' "${STEAMAPPDIR}/${STEAMAPP}/cfg/server.cfg"

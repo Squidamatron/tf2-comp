@@ -18,9 +18,11 @@ unzip "$RGLDL" -d "${STEAMAPPDIR}/${STEAMAPP}"
 rm "$RGLDL"
 
 # ETF2L CFG
-wget -q "https://etf2l.org/configs/etf2l_configs.zip"
-unzip "etf2l_configs.zip" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
-rm "etf2l_configs.zip"
+LATEST_ETF2L=$(curl -s https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].browser_download_url')
+ETF2L_DL=$(curl -s https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].name')
+wget -q "$LATEST_ETF2L"
+unzip "$ETF2L_DL" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
+rm "$ETF2L_DL"
 
 # SOAP-DM
 wget -q "https://github.com/sapphonie/SOAP-TF2DM/archive/master.zip" -O "soap-dm.zip"
@@ -74,13 +76,14 @@ chmod 0644 "newbie.cfg"
 mv "newbie.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/newbie.cfg"
 
 # EU newbie mixes
-echo -e "exec \"rgl_off\"\nservercfgfile \"eu_newbie\"\nexec \"etf2l_6v6_5cp\"" > "eu_newbie.cfg"
+echo -e "exec \"etf2l_6v6_5cp\"\nservercfgfile \"eu_newbie\"" > "eu_newbie.cfg"
 chmod 0644 "eu_newbie.cfg"
 mv "eu_newbie.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/eu_newbie.cfg"
 
 # Just making sure :D
 #chown -R "${USER}:${USER}" "${STEAMAPPDIR}/${STEAMAPP}"
 cd "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/"
+rm nextmap.smx
 chmod -R 0644 *.smx
 
 cd "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/"

@@ -43,6 +43,7 @@ ENV STV_PW="changeme" \
 	UPDATE_XM="0" \
 	UPDATE_CFGS="0" \
 	UPDATE_PLUGINS="0" \
+	REGION="" \
 	LOGSTF_APIKEY="" \
 	DEMOSTF_APIKEY=""
 
