@@ -29,9 +29,11 @@ if [ "$UPDATE_CFGS" -gt 0 ]; then
 	rm "$RGLDL"
 
 	# ETF2L CFG
-	wget -q "https://etf2l.org/configs/etf2l_configs.zip"
-	unzip -o -q "etf2l_configs.zip" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
-	rm "etf2l_configs.zip"
+	LATEST_ETF2L=$(curl -s https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].browser_download_url')
+	ETF2L_DL=$(curl -s https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].name')
+	wget -q "$LATEST_ETF2L"
+	unzip "$ETF2L_DL" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
+	rm "$ETF2L_DL"
 fi
 
 # Update Plugins
@@ -68,15 +70,20 @@ if [ "$UPDATE_PLUGINS" -gt 0 ]; then
 fi
 
 # Sets Region
-if [ ! -z "$REGION" ];then
-	if [ "$REGION" == "NA" ];then
+if [ ! -z "$REGION" ]; then
+	if [ "$REGION" == "NA" ]; then
 		echo "Setting REGION to NA..."
 		# It's the Default, nothing changes! Unless some other plugins come in to play..."
-	elif [ "$REGION" == "EU" ];then
+	elif [ "$REGION" == "EU" ]; then
 		echo "Setting REGION to EU..."
 		# Delete RGL plugins
-		rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglqol.smx"
-		rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglupdater.smx"
+		if [ -a "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglqol.smx" ]; then
+			rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglqol.smx"
+		fi
+
+		if [ -a "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglupdater.smx" ]; then
+			rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/rglupdater.smx"
+		fi
 	else
 		echo "Unknown Region :O"
 	fi
