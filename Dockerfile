@@ -47,7 +47,7 @@ ENV STV_PW="changeme" \
 	LOGSTF_APIKEY="" \
 	DEMOSTF_APIKEY=""
 
-ADD plugins.sh tf.sh server.cfg gamejson.smx "${HOMEDIR}/"
+ADD plugins.sh tf.sh server.cfg gamejson.smx splock.smx "${HOMEDIR}/"
 RUN "${HOMEDIR}/plugins.sh"
 
 WORKDIR "${HOMEDIR}"

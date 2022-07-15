@@ -68,6 +68,9 @@ mv "${HOMEDIR}/server.cfg" "${STEAMAPPDIR}/${STEAMAPP}/cfg/server.cfg"
 # gamejson plugin
 mv "${HOMEDIR}/gamejson.smx" "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/gamejson.smx"
 
+# speclock plugin
+mv "${HOMEDIR}/splock.smx" "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/splock.smx"
+
 # NA newbie mixes
 echo -e "exec \"rgl_6s_5cp_scrim\"\nservercfgfile \"na_newbie\"\ntf_spec_xray \"1\"" > "na_newbie.cfg"
 chmod 0644 "na_newbie.cfg"
