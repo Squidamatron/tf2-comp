@@ -3,51 +3,56 @@ mkdir plugins
 cd plugins
 
 # Metamod
-LATESTMM=$(wget -qO- "https://mms.alliedmods.net/mmsdrop/${METAMOD_VERSION}/mmsource-latest-linux")
-wget -qO- "https://mms.alliedmods.net/mmsdrop/${METAMOD_VERSION}/${LATESTMM}" | tar xvzf - -C "${STEAMAPPDIR}/${STEAMAPP}"
+LATEST_MM=$(curl -sS "https://mms.alliedmods.net/mmsdrop/${METAMOD_VERSION}/mmsource-latest-linux")
+curl -sS "https://mms.alliedmods.net/mmsdrop/${METAMOD_VERSION}/${LATEST_MM}" | tar xvzf - -C "${STEAMAPPDIR}/${STEAMAPP}"
 
 # Sourcemod
-LATESTSM=$(wget -qO- "https://sm.alliedmods.net/smdrop/${SOURCEMOD_VERSION}/sourcemod-latest-linux")
-wget -qO- "https://sm.alliedmods.net/smdrop/${SOURCEMOD_VERSION}/${LATESTSM}" | tar xvzf - -C "${STEAMAPPDIR}/${STEAMAPP}"
+LATEST_SM=$(curl -sS "https://sm.alliedmods.net/smdrop/${SOURCEMOD_VERSION}/sourcemod-latest-linux")
+curl -sS "https://sm.alliedmods.net/smdrop/${SOURCEMOD_VERSION}/${LATEST_SM}" | tar xvzf - -C "${STEAMAPPDIR}/${STEAMAPP}"
 
 # RGL Server Resources
-LATESTRGL=$(curl -s https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest | jq -r '.assets[0].browser_download_url')
-RGLDL=$(curl -s https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest | jq -r '.assets[0].name')
-wget -q "$LATESTRGL"
-unzip "$RGLDL" -d "${STEAMAPPDIR}/${STEAMAPP}"
-rm "$RGLDL"
+LATEST_RGL=$(curl -sS https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest | jq -r '.assets[0].browser_download_url')
+RGL_DL=$(curl -sS https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest | jq -r '.assets[0].name')
+curl -sSL "$LATEST_RGL" -o "$RGL_DL"
+unzip "$RGL_DL" -d "${STEAMAPPDIR}/${STEAMAPP}"
+rm "$RGL_DL"
 
 # ETF2L CFG
-LATEST_ETF2L=$(curl -s https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].browser_download_url')
-ETF2L_DL=$(curl -s https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].name')
-wget -q "$LATEST_ETF2L"
+LATEST_ETF2L=$(curl -sS https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].browser_download_url')
+ETF2L_DL=$(curl -sS https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].name')
+curl -sSL "$LATEST_ETF2L" -o "$ETF2L_DL"
 unzip "$ETF2L_DL" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
 rm "$ETF2L_DL"
 
 # SOAP-DM
-wget -q "https://github.com/sapphonie/SOAP-TF2DM/archive/master.zip" -O "soap-dm.zip"
-unzip "soap-dm.zip"
-cp -r SOAP-TF2DM-master/* "${STEAMAPPDIR}/${STEAMAPP}"
-rm -r "SOAP-TF2DM-master"
-rm "soap-dm.zip"
+LATEST_SOAP=$(curl -sS "https://api.github.com/repos/sapphonie/SOAP-TF2DM/releases/latest" | jq -r '.assets[0].browser_download_url')
+SOAP_DL=$(curl -sS "https://api.github.com/repos/sapphonie/SOAP-TF2DM/releases/latest" | jq -r '.assets[0].name')
+curl -sSL "$LATEST_SOAP" -o "$SOAP_DL"
+unzip "$SOAP_DL" -d "${STEAMAPPDIR}/${STEAMAPP}"
+rm "$SOAP_DL"
 
 # curl
-wget -q "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/sourcemod-curl-extension/curl_1.3.0.0.zip"
-unzip "curl_1.3.0.0.zip" -d "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/"
-rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/curl.ext.so"
-wget -q "https://raw.githubusercontent.com/spiretf/docker-comp-server/master/curl.ext.so" -O "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/curl.ext.so"
+curl -sS "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/sourcemod-curl-extension/curl_1.3.0.0.zip" -o "curl_1.3.0.0.zip"
+unzip -f "curl_1.3.0.0.zip" -d "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/"
+#rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/curl.ext.so"
+curl -sSL "https://raw.githubusercontent.com/spiretf/docker-comp-server/master/curl.ext.so" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/curl.ext.so"
 rm "curl_1.3.0.0.zip"
 
-# Steamtools
-wget -q "https://builds.limetech.io/files/steamtools-0.10.0-git179-54fdc51-linux.zip"
-unzip "steamtools-0.10.0-git179-54fdc51-linux.zip" -d "${STEAMAPPDIR}/${STEAMAPP}"
-rm "steamtools-0.10.0-git179-54fdc51-linux.zip"
+### Left in case RGL stops packaging SteamWorks
+## Steamtools
+#wget -q "https://builds.limetech.io/files/steamtools-0.10.0-git179-54fdc51-linux.zip"
+#unzip "steamtools-0.10.0-git179-54fdc51-linux.zip" -d "${STEAMAPPDIR}/${STEAMAPP}"
+#rm "steamtools-0.10.0-git179-54fdc51-linux.zip"
+
+## SteamWorks
+#LATEST_SW=$(curl -s https://api.github.com/repos/KyleSanderson/SteamWorks/releases/latest | jq -r '.assets[] | select(.name == "package-lin.tgz") | .browser_download_url')
+#wget -qO- "$LATEST_SW" | tar zxvf - -C "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/" --strip-components=1 package/addons/
 
 # demos.tf
-wget -q "https://github.com/demostf/plugin/raw/master/demostf.smx" -O "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/demostf.smx"
+curl -sSL "https://github.com/demostf/plugin/raw/master/demostf.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/demostf.smx"
 
 # F2 Plugins
-wget -q "http://sourcemod.krus.dk/f2-sourcemod-plugins.zip"
+curl -sS "http://sourcemod.krus.dk/f2-sourcemod-plugins.zip" -o "f2-sourcemod-plugins.zip"
 unzip "f2-sourcemod-plugins.zip" -d f2
 chmod 0664 f2/*
 cp f2/{afk,logstf,medicstats,recordstv,restorescore,supstats2}.smx "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/."
@@ -55,10 +60,10 @@ rm -r "f2"
 rm "f2-sourcemod-plugins.zip"
 
 # Map Downloader
-wget -q "https://github.com/nutcity/mapdownloader/raw/master/plugin/mapdownloader.smx" -O "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/mapdownloader.smx"
+curl -sSL "https://github.com/nutcity/mapdownloader/raw/master/plugin/mapdownloader.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/mapdownloader.smx"
 
 # proper-pregame
-wget -q "https://github.com/nutcity/ProperPregame/raw/master/addons/sourcemod/plugins/properpregame.smx" -O "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/properpregame.smx"
+curl -sSL "https://github.com/nutcity/ProperPregame/raw/master/addons/sourcemod/plugins/properpregame.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/properpregame.smx"
 echo -e "\nsm plugins unload properpregame" >> "${STEAMAPPDIR}/${STEAMAPP}/cfg/sourcemod/soap_live.cfg"
 echo -e "\nsm plugins load properpregame" >> "${STEAMAPPDIR}/${STEAMAPP}/cfg/sourcemod/soap_notlive.cfg"
 
@@ -95,3 +100,7 @@ chmod -R 0644 *.smx
 cd "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/"
 chmod -R 0700 *
 
+# Stop the steamclient.so missing error
+cd "${HOMEDIR}/.steam"
+mkdir sdk32;cd sdk32
+ln -s "${HOMEDIR}/steamcmd/linux32/steamclient.so" steamclient.so
