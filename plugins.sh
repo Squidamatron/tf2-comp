@@ -11,22 +11,19 @@ LATEST_SM=$(curl -sS "https://sm.alliedmods.net/smdrop/${SOURCEMOD_VERSION}/sour
 curl -sS "https://sm.alliedmods.net/smdrop/${SOURCEMOD_VERSION}/${LATEST_SM}" | tar xvzf - -C "${STEAMAPPDIR}/${STEAMAPP}"
 
 # RGL Server Resources
-LATEST_RGL=$(curl -sS https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest | jq -r '.assets[0].browser_download_url')
-RGL_DL=$(curl -sS https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest | jq -r '.assets[0].name')
+read -r LATEST_RGL RGL_DL < <(echo $(curl -sS "https://api.github.com/repos/RGLgg/server-resources-updater/releases/latest" | jq -r '.assets[0].browser_download_url, .assets[0].name'))
 curl -sSL "$LATEST_RGL" -o "$RGL_DL"
 unzip "$RGL_DL" -d "${STEAMAPPDIR}/${STEAMAPP}"
 rm "$RGL_DL"
 
 # ETF2L CFG
-LATEST_ETF2L=$(curl -sS https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].browser_download_url')
-ETF2L_DL=$(curl -sS https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest | jq -r '.assets[0].name')
+read -r LATEST_ETF2L ETF2L_DL < <(echo $(curl -sS "https://api.github.com/repos/ETF2L/gameserver-configs/releases/latest" | jq -r '.assets[0].browser_download_url, .assets[0].name'))
 curl -sSL "$LATEST_ETF2L" -o "$ETF2L_DL"
 unzip "$ETF2L_DL" -d "${STEAMAPPDIR}/${STEAMAPP}/cfg"
 rm "$ETF2L_DL"
 
 # SOAP-DM
-LATEST_SOAP=$(curl -sS "https://api.github.com/repos/sapphonie/SOAP-TF2DM/releases/latest" | jq -r '.assets[0].browser_download_url')
-SOAP_DL=$(curl -sS "https://api.github.com/repos/sapphonie/SOAP-TF2DM/releases/latest" | jq -r '.assets[0].name')
+read -r LATEST_SOAP SOAP_DL < <(echo $(curl -sS "https://api.github.com/repos/sapphonie/SOAP-TF2DM/releases/latest" | jq -r '.assets[0].browser_download_url, .assets[0].name'))
 curl -sSL "$LATEST_SOAP" -o "$SOAP_DL"
 unzip "$SOAP_DL" -d "${STEAMAPPDIR}/${STEAMAPP}"
 rm "$SOAP_DL"
@@ -52,8 +49,9 @@ rm "curl_1.3.0.0.zip"
 curl -sSL "https://github.com/demostf/plugin/raw/master/demostf.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/demostf.smx"
 
 # F2 Plugins
-curl -sS "http://sourcemod.krus.dk/f2-sourcemod-plugins.zip" -o "f2-sourcemod-plugins.zip"
-unzip "f2-sourcemod-plugins.zip" -d f2
+read -r LATEST_F2 F2_DL < <(echo $(curl -sS "https://api.github.com/repos/F2/F2s-sourcemod-plugins/releases/latest" | jq -r '.assets[0].browser_download_url, .assets[0].name'))
+curl -sSL "$LATEST_F2" -o "$F2_DL"
+unzip "$F2_DL" -d "f2"
 chmod 0664 f2/*
 cp f2/{afk,logstf,medicstats,recordstv,restorescore,supstats2}.smx "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/."
 rm -r "f2"
