@@ -28,22 +28,10 @@ curl -sSL "$LATEST_SOAP" -o "$SOAP_DL"
 unzip "$SOAP_DL" -d "${STEAMAPPDIR}/${STEAMAPP}"
 rm "$SOAP_DL"
 
-# curl
-curl -sS "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/sourcemod-curl-extension/curl_1.3.0.0.zip" -o "curl_1.3.0.0.zip"
-unzip -f "curl_1.3.0.0.zip" -d "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/"
-#rm "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/curl.ext.so"
-curl -sSL "https://raw.githubusercontent.com/spiretf/docker-comp-server/master/curl.ext.so" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/curl.ext.so"
-rm "curl_1.3.0.0.zip"
-
-### Left in case RGL stops packaging SteamWorks
-## Steamtools
-#wget -q "https://builds.limetech.io/files/steamtools-0.10.0-git179-54fdc51-linux.zip"
-#unzip "steamtools-0.10.0-git179-54fdc51-linux.zip" -d "${STEAMAPPDIR}/${STEAMAPP}"
-#rm "steamtools-0.10.0-git179-54fdc51-linux.zip"
-
-## SteamWorks
-#LATEST_SW=$(curl -s https://api.github.com/repos/KyleSanderson/SteamWorks/releases/latest | jq -r '.assets[] | select(.name == "package-lin.tgz") | .browser_download_url')
-#wget -qO- "$LATEST_SW" | tar zxvf - -C "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/" --strip-components=1 package/addons/
+read -r LATEST_NEOCURL NEOCURL_DL < <(echo $(curl -sS "https://api.github.com/repos/sapphonie/SM-neocurl-ext/releases/latest" | jq -r '.assets[0].browser_download_url, .assets[0].name'))
+curl -sSL "$LATEST_NEOCURL" -o "$NEOCURL_DL"
+unzip "$NEOCURL_DL" -d "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/"
+rm "$NEOCURL_DL"
 
 # demos.tf
 curl -sSL "https://github.com/demostf/plugin/raw/master/demostf.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/demostf.smx"
