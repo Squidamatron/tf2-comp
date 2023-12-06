@@ -28,6 +28,7 @@ curl -sSL "$LATEST_SOAP" -o "$SOAP_DL"
 unzip "$SOAP_DL" -d "${STEAMAPPDIR}/${STEAMAPP}"
 rm "$SOAP_DL"
 
+# neocurl
 read -r LATEST_NEOCURL NEOCURL_DL < <(echo $(curl -sS "https://api.github.com/repos/sapphonie/SM-neocurl-ext/releases/latest" | jq -r '.assets[0].browser_download_url, .assets[0].name'))
 curl -sSL "$LATEST_NEOCURL" -o "$NEOCURL_DL"
 unzip "$NEOCURL_DL" -d "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/"
@@ -41,12 +42,12 @@ read -r LATEST_F2 F2_DL < <(echo $(curl -sS "https://api.github.com/repos/F2/F2s
 curl -sSL "$LATEST_F2" -o "$F2_DL"
 unzip "$F2_DL" -d "f2"
 chmod 0664 f2/*
-cp f2/{afk,logstf,medicstats,recordstv,restorescore,supstats2}.smx "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/."
+cp f2/{afk,logstf,medicstats,recordstv,supstats2}.smx "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/."
 rm -r "f2"
-rm "f2-sourcemod-plugins.zip"
+rm "$F2_DL"
 
 # Map Downloader
-curl -sSL "https://github.com/nutcity/mapdownloader/raw/master/plugin/mapdownloader.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/mapdownloader.smx"
+curl -sSL "https://github.com/spiretf/mapdownloader/raw/master/plugin/mapdownloader.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/mapdownloader.smx"
 
 # proper-pregame
 curl -sSL "https://github.com/nutcity/ProperPregame/raw/master/addons/sourcemod/plugins/properpregame.smx" -o "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/properpregame.smx"
@@ -87,6 +88,6 @@ cd "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/"
 chmod -R 0700 *
 
 # Stop the steamclient.so missing error
-cd "${HOMEDIR}/.steam"
-mkdir sdk32;cd sdk32
+mkdir -p "${HOMEDIR}/.steam/sdk32"
+cd "${HOMEDIR}/.steam/sdk32"
 ln -s "${HOMEDIR}/steamcmd/linux32/steamclient.so" steamclient.so
