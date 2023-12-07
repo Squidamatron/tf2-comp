@@ -20,10 +20,9 @@ docker pull squidamatron/tf2-comp
 	- LogsTF
 	- MedicStats
 	- RecordSTV
-	- RestoreScore
 	- SupStats2
-- [Map Downloader](https://github.com/nutcity/mapdownloader)
-- [ProperPregame](https://github.com/nutcity/ProperPregame)
+- [Map Downloader](https://github.com/spiretf/mapdownloader)
+- [ProperPregame](https://github.com/AJagger/ProperPregame)
 
 ## Maps
 
